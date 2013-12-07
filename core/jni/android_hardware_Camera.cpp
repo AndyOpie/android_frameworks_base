@@ -388,7 +388,7 @@ void JNICameraContext::setCallbackMode(JNIEnv *env, bool installed, bool manualM
 static void android_hardware_Camera_setLongshot(JNIEnv *env, jobject thiz, jboolean enable)
 {
     ALOGV("setLongshot");
-#ifdef QCOM_HARDWARE
+#ifndef QCOM_HARDWARE
     JNICameraContext* context;
     status_t rc;
     sp<Camera> camera = get_native_camera(env, thiz, &context);
@@ -409,7 +409,7 @@ static void android_hardware_Camera_setLongshot(JNIEnv *env, jobject thiz, jbool
 static void android_hardware_Camera_sendHistogramData(JNIEnv *env, jobject thiz)
  {
    ALOGV("sendHistogramData" );
-#ifdef QCOM_HARDWARE
+#ifndef QCOM_HARDWARE
    JNICameraContext* context;
    status_t rc;
    sp<Camera> camera = get_native_camera(env, thiz, &context);
@@ -714,12 +714,12 @@ static void android_hardware_Camera_setMetadataCb(JNIEnv *env, jobject thiz, jbo
     status_t rc;
     sp<Camera> camera = get_native_camera(env, thiz, &context);
     if (camera == 0) return;
-
-    if(mode == true)
+/*
+    if (mode == true)
         rc = camera->sendCommand(CAMERA_CMD_METADATA_ON, 0, 0);
     else
         rc = camera->sendCommand(CAMERA_CMD_METADATA_OFF, 0, 0);
-
+*/
     if (rc != NO_ERROR) {
         jniThrowException(env, "java/lang/RuntimeException", "set metadata mode failed");
     }
